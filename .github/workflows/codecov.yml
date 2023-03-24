@@ -1,0 +1,24 @@
+name: Codecov.io Code Coverage Report
+
+on:
+  pull_request:
+    branches: [ add-codecov-report-action ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+    - name: Install Dependencies
+      run: npm install
+    - name: Run Tests with Coverage
+      run: npm run test -- --coverage
+    - name: Upload Coverage Report to Codecov.io
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
